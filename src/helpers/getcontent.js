@@ -15,9 +15,3 @@ const getContent = (callback) => {
 };
 
 module.exports = getContent;
-
-const logResults = (err, result) => {
-  console.log(result);
-};
-
-getContent(logResults);

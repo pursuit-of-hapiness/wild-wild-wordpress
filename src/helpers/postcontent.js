@@ -7,7 +7,7 @@ const postContent = (post, callback) => {
   client.query(`INSERT INTO content(title, content_body)
                 VALUES ($1, $2)
                 RETURNING id, userid, title, content_body, date_created, date_updated, published`,
-  [title, content],
+                [title, content],
   (err, result) => {
     if (err) {
       console.log(err);
