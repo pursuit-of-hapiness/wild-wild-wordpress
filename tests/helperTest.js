@@ -30,7 +30,7 @@ tape('tests that updateContent returns UPDATE command', (t) => {
     contentBody: 'This is the old content body',
   };
   const getIdFromTestPost = (err, result) => {
-    const testId = result.rows[0].id;
+    let testId = result.rows[0].id;
     const newPost = {
       id: testId,
       title: 'Test title',
@@ -46,15 +46,20 @@ tape('tests that updateContent returns UPDATE command', (t) => {
 });
 
 tape('tests that deleteContent return the DELETE command', (t) => {
-  const randomTitle = 'Test random title ' + String(Math.random());
-  const postToDelete = {
-    title: randomTitle,
+  let fakePost = {
+    title: 'Test title',
     contentBody: 'This will be deleted',
   };
-  postContent(postToDelete, () => {});
-  const testDeleteContent = (err, response) => {
-    t.equal(response.command, 'DELETE', 'Should return DELETE command');
-    t.end();
+  const getIdFromTestPost = (err, result) => {
+    let testId = result.rows[0].id;
+    let postToDelete = {
+      id: testId
+    };
+    const testDeleteContent = (err, response) => {
+      t.equal(response.command, 'DELETE', 'Should return DELETE command');
+      t.end();
+    };
+    deleteContent(postToDelete, testDeleteContent);
   };
-  deleteContent(postToDelete, testDeleteContent);
+  postContent(fakePost, getIdFromTestPost);
 });
