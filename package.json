@@ -4,7 +4,8 @@
   "description": "Wordpressish CMS project",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "servertest": "nodemon tests/serverTest.js",
+    "helpertest": "nodemon tests/helperTest.js"
   },
   "repository": {
     "type": "git",
