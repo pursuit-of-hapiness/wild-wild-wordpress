@@ -1,11 +1,11 @@
 const pgClient = require('./pgclient.js');
 
 const deleteContent = (postToDelete, callback) => {
-  const title = postToDelete.title;
+  const id = postToDelete.id;
   const client = pgClient();
   client.query(`DELETE FROM content
-                WHERE title = $1`,
-                [title],
+                WHERE id = $1`,
+                [id],
   (err, result) => {
     if (err) {
       console.log(err);

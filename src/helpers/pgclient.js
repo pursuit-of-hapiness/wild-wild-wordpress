@@ -1,7 +1,8 @@
 const pg = require('pg');
+require('env2')('config.env');
 
 const pgClient = () => {
-  const connectionString = 'postgres://qvggfurt:r3jWdQxJdDGRxpuPXrstJb2KlfQ9Gtdn@horton.elephantsql.com:5432/qvggfurt';
+  const connectionString = process.env.DATABASE_URL;
   const client = new pg.Client(connectionString);
   client.connect((err) => {
     if (err) {
