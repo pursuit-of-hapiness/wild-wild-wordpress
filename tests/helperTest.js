@@ -2,6 +2,7 @@ const tape = require('tape');
 const postContent = require('../src/helpers/postcontent.js');
 const getContent = require('../src/helpers/getcontent.js');
 const updateContent = require('../src/helpers/updatecontent.js');
+const deleteContent = require('../src/helpers/deletecontent.js');
 
 tape('tests that postContent generates INSERT command', (t) => {
   const fakePost = {
@@ -24,7 +25,7 @@ tape('tests that getContent returns a SELECT command', (t) => {
 });
 
 tape('tests that updateContent returns UPDATE command', (t) => {
-  const randomTitle = String(Math.random());
+  const randomTitle = 'Test random title ' + String(Math.random());
   const oldPost = {
     title: randomTitle,
     contentBody: 'This is the old content body',
@@ -39,4 +40,18 @@ tape('tests that updateContent returns UPDATE command', (t) => {
     t.end();
   };
   updateContent(newPost, testUpdateContent);
+});
+
+tape('tests that deleteContent return the DELETE command', (t) => {
+  const randomTitle = 'Test random title ' + String(Math.random());
+  const postToDelete = {
+    title: randomTitle,
+    contentBody: 'This will be deleted',
+  };
+  postContent(postToDelete, () => {});
+  const testDeleteContent = (err, response) => {
+    t.equal(response.command, 'DELETE', 'Should return DELETE command');
+    t.end();
+  };
+  deleteContent(postToDelete, testDeleteContent);
 });
