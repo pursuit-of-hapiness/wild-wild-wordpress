@@ -23,7 +23,62 @@ test('Handles content requests without auth', (t) => {
   };
 
   server.inject(options, (response) => {
+    const payload = JSON.parse(response.payload)
     t.equal(response.statusCode, 200);
+    t.ok(payload.rows[0].id > 0)
     server.stop(t.end);
   });
 });
+
+test('Posts content requests without auth', (t) => {
+  const payload = {
+    title: 'Post title',
+    contentBody: 'This is a blog post',
+  }
+  const options = {
+    method: 'POST',
+    url: '/content',
+    payload,
+  };
+
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 201);
+    t.ok(response.payload.includes('content_body'));
+    server.stop(t.end);
+  });
+});
+
+test('Posts content requests without auth', (t) => {
+  const payload = {
+    postid: 1,
+    title: 'Post title',
+    contentBody: 'This is a blog post',
+  };
+  const options = {
+    method: 'PUT',
+    url: '/content',
+    payload,
+  };
+
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 204);
+    server.stop(t.end);
+  });
+  });
+test('Deletes succesfully', (t) => {
+    const payload = {
+      postid: 1,
+      title: 'Post title',
+      contentBody: 'This is a blog post',
+    };
+    const options = {
+      method: 'DELETE',
+      url: '/content',
+      payload,
+    };
+
+    server.inject(options, (response) => {
+      t.equal(response.statusCode, 204);
+      server.stop(t.end);
+    });
+  });

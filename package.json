@@ -4,7 +4,8 @@
   "description": "Wordpressish CMS project",
   "main": "server.js",
   "scripts": {
-    "servertest": "nodemon tests/serverTest.js",
+    "servertest": "nodemon tests/serverTest.js | faucet ",
+    "nyantest": "nodemon tests/serverTest.js | tnyan",
     "helpertest": "nodemon tests/helperTest.js"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "istanbul": "^0.4.4",
     "pg": "^6.0.3",
     "shot": "^3.1.0",
+    "tap-nyan": "0.0.2",
     "tape": "^4.6.0"
   },
   "engines": {
