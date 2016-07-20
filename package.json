@@ -33,6 +33,7 @@
   "dependencies": {
     "faucet": "0.0.1",
     "istanbul": "^0.4.4",
+    "pg": "^6.0.3",
     "shot": "^3.1.0",
     "tape": "^4.6.0"
   },
