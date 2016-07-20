@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "faucet": "0.0.1",
+    "hapi": "^13.5.0",
+    "inert": "^4.0.1",
     "istanbul": "^0.4.4",
     "shot": "^3.1.0",
     "tape": "^4.6.0"
