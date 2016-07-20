@@ -1,13 +1,17 @@
 'use strict';
 
 const hapi = require('hapi');
-const path = require('path');
 const plugins = ['inert'];
 const routes = [
-  require('./routes/static'),
-  require('./routes/content')
+  'static',
+  'getContent',
+  'postContent',
+  'updateContent',
+  'deleteContent'];
 
-];
+const routesArray = routes.map((el) => {
+  return require(`./routes/${el}`)
+})
 const server = new hapi.Server();
 
 
@@ -20,8 +24,9 @@ server.start((starterr) => {
   console.log('Server running at:', server.info.uri);
 });
 
-server.register(require('inert'), (registererr) => {
-  server.route(routes);
+server.register(require(plugins[0]), (registererr) => {
+  if (registererr) console.log(registererr);
+  server.route(routesArray);
 });
 
 module.exports = server;
