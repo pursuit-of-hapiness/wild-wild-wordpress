@@ -4,7 +4,9 @@ const postContent = (post, callback) => {
   const title = post.title;
   const content = post.contentBody;
   const client = pgClient();
-  client.query('INSERT INTO content(title, content_body) VALUES ($1, $2)',
+  client.query(`INSERT INTO content(title, content_body)
+                VALUES ($1, $2)
+                RETURNING id, userid, title, content_body, date_created, date_updated, published`,
   [title, content],
   (err, result) => {
     if (err) {
@@ -16,13 +18,4 @@ const postContent = (post, callback) => {
   });
 };
 
-const fakePost = {
-  title: 'Post Title',
-  contentBody: 'This is the content of the post',
-};
-
-const logResult = (err, response) => {
-  console.log(response);
-};
-
-postContent(fakePost, logResult);
+module.exports = postContent;
