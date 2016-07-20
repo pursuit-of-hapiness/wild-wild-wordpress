@@ -25,21 +25,24 @@ tape('tests that getContent returns a SELECT command', (t) => {
 });
 
 tape('tests that updateContent returns UPDATE command', (t) => {
-  const randomTitle = 'Test random title ' + String(Math.random());
   const oldPost = {
-    title: randomTitle,
+    title: 'Test title',
     contentBody: 'This is the old content body',
   };
-  postContent(oldPost, () => {});
-  const newPost = {
-    title: randomTitle,
-    contentBody: 'This is the new content body',
+  const getIdFromTestPost = (err, result) => {
+    const testId = result.rows[0].id;
+    const newPost = {
+      id: testId,
+      title: 'Test title',
+      contentBody: 'This is the new content body',
+    };
+    const testUpdateContent = (err, response) => {
+      t.equal(response.command, 'UPDATE', 'Should return UPDATE command');
+      t.end();
+    };
+    updateContent(newPost, testUpdateContent);
   };
-  const testUpdateContent = (err, response) => {
-    t.equal(response.command, 'UPDATE', 'Should return UPDATE command');
-    t.end();
-  };
-  updateContent(newPost, testUpdateContent);
+  postContent(oldPost, getIdFromTestPost);
 });
 
 tape('tests that deleteContent return the DELETE command', (t) => {
