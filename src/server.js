@@ -7,11 +7,14 @@ const routes = [
   'getContent',
   'postContent',
   'updateContent',
-  'deleteContent'];
+  'deleteContent',
+  'registerUser',
+  'loginUser'];
 
 const routesArray = routes.map((el) => {
   return require(`./routes/${el}`)
 })
+
 const server = new hapi.Server();
 
 

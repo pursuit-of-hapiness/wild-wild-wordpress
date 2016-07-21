@@ -4,9 +4,10 @@
   "description": "Wordpressish CMS project",
   "main": "server.js",
   "scripts": {
-    "servertest": "nodemon tests/serverTest.js | faucet ",
+    "authtest": "nodemon tests/authTest.js",
+    "servertest": "nodemon tests/serverTest.js",
     "nyantest": "nodemon tests/serverTest.js | tnyan",
-    "helpertest": "nodemon tests/helperTest.js | faucet"
+    "helpertest": "nodemon tests/helperTest.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "eslint-plugin-react": "^5.2.2"
   },
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "env2": "^2.1.0",
     "faucet": "0.0.1",
     "hapi": "^13.5.0",
