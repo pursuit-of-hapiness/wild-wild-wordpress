@@ -1,4 +1,4 @@
-const postContent = require('../helpers/postcontent')
+const postContent = require('../helpers/postcontent');
 
 module.exports = {
   method: 'POST',
