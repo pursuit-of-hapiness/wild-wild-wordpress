@@ -5,7 +5,7 @@ module.exports = {
   path: '/content',
   handler: (request, reply) => {
     getContent((err, result) => {
-      reply(result);
+      reply.view('blog', result.rows);
     });
   },
 };
