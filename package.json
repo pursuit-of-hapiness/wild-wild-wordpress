@@ -34,13 +34,15 @@
   "dependencies": {
     "env2": "^2.1.0",
     "faucet": "0.0.1",
+    "handlebars": "^4.0.5",
     "hapi": "^13.5.0",
     "inert": "^4.0.1",
     "istanbul": "^0.4.4",
     "pg": "^6.0.3",
     "shot": "^3.1.0",
     "tap-nyan": "0.0.2",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "vision": "^4.1.0"
   },
   "engines": {
     "node": "6.2.2"
