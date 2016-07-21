@@ -1,4 +1,4 @@
-const getContent = require('../helpers/getcontent')
+const getContent = require('../helpers/getcontent');
 
 module.exports = {
   method: 'GET',
