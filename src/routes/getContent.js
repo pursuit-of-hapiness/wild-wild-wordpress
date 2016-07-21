@@ -5,7 +5,9 @@ module.exports = {
   path: '/content',
   handler: (request, reply) => {
     getContent((err, result) => {
-      reply.view('blog', result.rows);
+      const data = {posts: ''};
+      data.posts = result.rows;
+      reply.view('blog', data);
     });
   },
 };

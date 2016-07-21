@@ -5,22 +5,21 @@
     <title>wild-wild-wordpress</title>
   </head>
   <body>
-    {{> header}}
+    {{>header}}
     <div id="post-maker">
       <textarea id="create-post" rows="8" cols="40"></textarea>
-      <button type="button" id="send-post"></button>
+      <button type="button" id="send-post">send</button>
     </div>
     <div id="content-wrapper">
+        {{#each posts}}
       <div class="post">
-        {{#each post}}
-        <h2>{{this.title}}</h2>
-        <div class="post-body">
-          {{this.content_body}}
-          <p>{{this.date}}</p>
-        </div>
-      </div>
-        {{/each}}
-    </div>
 
+        <h2>{{{title}}}</h2>
+        <p>{{{content_body}}}</p>
+        <p>{{{date_created}}}</p>
+
+    </div>
+      {{/each}}
+      </div>
   </body>
 </html>
