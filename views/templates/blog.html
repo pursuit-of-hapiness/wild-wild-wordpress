@@ -6,14 +6,20 @@
   </head>
   <body>
     {{>header}}
-
     <div id="post-maker">
       <textarea id="create-post" rows="8" cols="40"></textarea>
       <button type="button" id="send-post">send</button>
     </div>
     <div id="content-wrapper">
-      <h1>{{{title}}}</h1>
-    </div>
+        {{#each posts}}
+      <div class="post">
 
+        <h2>{{{title}}}</h2>
+        <p>{{{content_body}}}</p>
+        <p>{{{date_created}}}</p>
+
+    </div>
+      {{/each}}
+      </div>
   </body>
 </html>
