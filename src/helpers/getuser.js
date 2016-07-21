@@ -4,7 +4,7 @@ const getUser = (username, callback) => {
   const client = pgClient();
   client.query(`SELECT * FROM users
                 WHERE username = $1
-                ORDER BY id DESC`,
+                ORDER BY id ASC`,
                 [username],
   (err, result) => {
     if (err) {

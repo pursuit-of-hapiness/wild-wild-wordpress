@@ -20,6 +20,13 @@ const server = new hapi.Server();
 
 server.connection({ port: 3000 });
 
+server.state('session', {
+  ttl: 24 * 60 * 60 * 1000,     // One day
+  isSecure: true,
+  path: '/',
+  encoding: 'base64json',
+});
+
 server.start((starterr) => {
   if (starterr) {
     console.log(starterr);

@@ -13,8 +13,10 @@ module.exports = {
         password,
       };
       createUser(user, (createError, response) => {
-        reply().code(201);
-      })
+        const session = { user: response.rows[0].id };
+        session.last = Date.now();
+        reply().state('session', session).code(201);
+      });
     });
   },
 };
