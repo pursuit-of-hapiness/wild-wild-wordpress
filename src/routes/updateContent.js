@@ -2,9 +2,12 @@ const updateContent = require('../helpers/updatecontent')
 
 module.exports = {
   method: 'PUT',
-  path: '/content',
+  path: '/content/{id}',
   handler: (request, reply) => {
-    updateContent(request.payload, (err, result) => {
+    const id = request.params.id;
+    const payload = Object.assign({}, request.payload);
+    payload.postid = id;
+    updateContent(payload, (err, result) => {
       reply(result).code(204);
     });
   },

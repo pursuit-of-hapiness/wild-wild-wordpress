@@ -7,11 +7,7 @@ const deleteContent = (postToDelete, callback) => {
                 WHERE title = $1`,
                 [title],
   (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      callback(err, result);
-    }
+    callback(err, result);
     client.end();
   });
 };
