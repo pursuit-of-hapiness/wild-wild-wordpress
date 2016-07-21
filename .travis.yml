@@ -10,7 +10,8 @@ cache:
 before_script:
   - npm prune
 script:
-  - npm test
+  - npm servertest
+  - npm helpertest
   - npm run check-coverage
 after_success:
   - npm run report-coverage

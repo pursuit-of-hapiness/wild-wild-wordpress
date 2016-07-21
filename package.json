@@ -6,7 +6,7 @@
   "scripts": {
     "servertest": "nodemon tests/serverTest.js | faucet ",
     "nyantest": "nodemon tests/serverTest.js | tnyan",
-    "helpertest": "nodemon tests/helperTest.js"
+    "helpertest": "nodemon tests/helperTest.js | faucet"
   },
   "repository": {
     "type": "git",
