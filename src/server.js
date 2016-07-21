@@ -11,8 +11,8 @@ const routes = [
   'login'];
 
 const routesArray = routes.map((el) => {
-  return require(`./routes/${el}`)
-})
+  return require(`./routes/${el}`);
+});
 const server = new hapi.Server();
 
 
