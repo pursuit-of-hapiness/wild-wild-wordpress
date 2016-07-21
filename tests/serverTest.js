@@ -55,7 +55,7 @@ test('Basic / route test', (t) => {
   });
 });
 
-test('Handles content requests without auth', (t) => {
+test('Handles content requests with session cookie', (t) => {
   const payload = {
     userid: 1,
   };
@@ -76,7 +76,60 @@ test('Handles content requests without auth', (t) => {
   });
 });
 
-test('Posts content requests without auth', (t) => {
+test('Content request unsuccessful without session cookie', (t) => {
+  const payload = {
+    userid: 1,
+  };
+
+  const options = {
+    method: 'GET',
+    url: '/content',
+    payload,
+  };
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 401);
+    server.stop(t.end);
+  });
+});
+
+test('Update content requests successful with valid session cookie', (t) => {
+  const payload = {
+    title: 'Post title',
+    contentBody: 'This is a blog post',
+  };
+  const options = {
+    method: 'PUT',
+    url: '/content/1',
+    payload,
+    headers: {
+      Cookie: cookie,
+    },
+  };
+
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 204);
+    server.stop(t.end);
+  });
+});
+
+test('Update content unsuccessful without valid session cookie', (t) => {
+  const payload = {
+    title: 'Post title',
+    contentBody: 'This is a blog post',
+  };
+  const options = {
+    method: 'PUT',
+    url: '/content/1',
+    payload,
+  };
+
+  server.inject(options, (response) => {
+    t.equal(response.statusCode, 401);
+    server.stop(t.end);
+  });
+});
+
+test('Posts content successful with valid session cookie', (t) => {
   const payload = {
     title: 'Post title',
     contentBody: 'This is a blog post',
@@ -97,7 +150,7 @@ test('Posts content requests without auth', (t) => {
   });
 });
 
-test('Posts content requests without auth', (t) => {
+test('Post content unsuccessful without session cookie', (t) => {
   const payload = {
     title: 'Post title',
     contentBody: 'This is a blog post',
@@ -106,13 +159,10 @@ test('Posts content requests without auth', (t) => {
     method: 'PUT',
     url: '/content/1',
     payload,
-    headers: {
-      Cookie: cookie,
-    },
   };
 
   server.inject(options, (response) => {
-    t.equal(response.statusCode, 204);
+    t.equal(response.statusCode, 401);
     server.stop(t.end);
   });
 });

@@ -15,7 +15,7 @@ module.exports = {
       createUser(user, (createError, response) => {
         const session = { user: response.rows[0].id };
         session.last = Date.now();
-        reply().state('session', session).code(201);
+        return reply().state('session', session).code(201);
       });
     });
   },

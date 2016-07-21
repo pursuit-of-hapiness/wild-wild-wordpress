@@ -11,7 +11,7 @@ module.exports = {
       bcrypt.compare(password, response.rows[0].password, (compareErr, result) => {
         const session = { user: response.rows[0].id };
         session.last = Date.now();
-        reply().state('session', session).code(202);
+        return reply().state('session', session).code(202);
       });
     });
   },

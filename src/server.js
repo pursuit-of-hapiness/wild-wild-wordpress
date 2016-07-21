@@ -1,4 +1,6 @@
 'use strict';
+require('env2')('config.env');
+const ironPassword = process.env.ironPassword;
 
 const hapi = require('hapi');
 const plugins = ['inert'];
@@ -11,9 +13,7 @@ const routes = [
   'registerUser',
   'loginUser'];
 
-const routesArray = routes.map((el) => {
-  return require(`./routes/${el}`)
-})
+const routesArray = routes.map((el) => require(`./routes/${el}`));
 
 const server = new hapi.Server();
 
@@ -24,7 +24,8 @@ server.state('session', {
   ttl: 24 * 60 * 60 * 1000,     // One day
   isSecure: true,
   path: '/',
-  encoding: 'base64json',
+  encoding: 'iron',
+  password: ironPassword,
 });
 
 server.start((starterr) => {
