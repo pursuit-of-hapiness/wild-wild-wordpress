@@ -1,13 +1,14 @@
 'use strict';
 
 const hapi = require('hapi');
-const plugins = ['inert'];
+
 const routes = [
   'static',
   'getContent',
   'postContent',
   'updateContent',
-  'deleteContent'];
+  'deleteContent',
+  'login'];
 
 const routesArray = routes.map((el) => {
   return require(`./routes/${el}`)
@@ -24,9 +25,23 @@ server.start((starterr) => {
   console.log('Server running at:', server.info.uri);
 });
 
-server.register(require(plugins[0]), (registererr) => {
+server.register([require('inert'), require('vision')], (registererr) => {
   if (registererr) console.log(registererr);
   server.route(routesArray);
+  server.views({
+    engines: {
+      html: {
+        module: require('handlebars'),
+        compileMode: 'sync',
+      },
+    },
+    relativeTo: __dirname,
+    path: '../views/templates',
+    layout: 'default',
+    layoutPath: '../views/layouts',
+    helpersPath: '../views/helpers',
+    partialsPath: '../views/partials',
+  });
 });
 
 module.exports = server;
