@@ -86,9 +86,9 @@ test('Handles content requests with session cookie', (t) => {
       },
     };
     server.inject(options, (response) => {
-      const respayload = JSON.parse(response.payload);
+      const respayload = response.payload;
       t.equal(response.statusCode, 200);
-      t.ok(respayload.rows[0].id > 0);
+      t.ok(respayload.includes('<!DOCTYPE html>'));
       server.stop(t.end);
     });
   });

@@ -1,4 +1,4 @@
-const updateContent = require('../helpers/updatecontent')
+const updateContent = require('../helpers/updatecontent');
 
 module.exports = {
   method: 'PUT',

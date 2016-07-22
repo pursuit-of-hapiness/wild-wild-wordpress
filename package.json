@@ -5,9 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "nodemon tests/tests.js | faucet",
-    "servertest": "nodemon tests/serverTest.js | faucet",
+    "servertest": "nodemon tests/serverTest.js",
     "nyantest": "nodemon tests/serverTest.js | tnyan",
-    "helpertest": "nodemon tests/helperTest.js | faucet"
+    "helpertest": "nodemon tests/helperTest.js | faucet",
+    "start": "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
@@ -36,13 +37,15 @@
     "bcryptjs": "^2.3.0",
     "env2": "^2.1.0",
     "faucet": "0.0.1",
+    "handlebars": "^4.0.5",
     "hapi": "^13.5.0",
     "inert": "^4.0.1",
     "istanbul": "^0.4.4",
     "pg": "^6.0.3",
     "shot": "^3.1.0",
     "tap-nyan": "0.0.2",
-    "tape": "^4.6.0"
+    "tape": "^4.6.0",
+    "vision": "^4.1.0"
   },
   "engines": {
     "node": "6.2.2"

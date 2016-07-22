@@ -2,7 +2,7 @@ const pgClient = require('./pgclient.js');
 
 const postContent = (post, callback) => {
   const title = post.title;
-  const content = post.contentBody;
+  const content = post.content_body;
   const client = pgClient();
   client.query(`INSERT INTO content(title, content_body)
                 VALUES ($1, $2)

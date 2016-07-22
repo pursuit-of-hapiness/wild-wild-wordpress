@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>wild-wild-wordpress</title>
+  </head>
+  <body>
+    {{>header}}
+    <div id="post-maker">
+      <textarea id="post-title" rows="2" cols="40"></textarea>
+      <textarea id="post-body" rows="8" cols="40"></textarea>
+      <button type="button" id="send-post">send</button>
+    </div>
+    <div id="content-wrapper">
+        {{#each posts}}
+      <div class="post">
+
+        <h2>{{{title}}}</h2>
+        <p>{{{content_body}}}</p>
+        <p>{{{date_created}}}</p>
+
+    </div>
+      {{/each}}
+      </div>
+    <script src="makeXhrRequest.js" charset="utf-8"></script>
+    <script src="index.js" charset="utf-8"></script>
+  </body>
+</html>
