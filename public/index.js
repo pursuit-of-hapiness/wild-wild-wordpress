@@ -1,5 +1,3 @@
-// const logIn = document.getElementById('log-in');
-// const register = document.getElementById('register');
 const getContent = () => {
   makeXhrRequest('', 'GET', '/content', 'application/json');
 };
@@ -13,7 +11,21 @@ const postContent = () => {
   makeXhrRequest(queryString, 'POST', '/content', 'application/x-www-form-urlencoded', getContent);
 };
 
+const userLogIn = (name, pass) => {
+  const userName = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const loginQueryString = `username=${name}&password=${pass}`;
+  makeXhrRequest(loginQueryString, 'POST', '/user/login', 'application/x-www-form-urlencoded');
+}
+
+const userRegister = (name, pass) => {
+  const userName = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const registerQueryString = `username=${name}&password=${pass}`;
+  makeXhrRequest(registerQueryString, 'POST', '/user/create', 'application/x-www-form-urlencoded');
+}
+
 window.addEventListener('load', getContent);
 document.getElementById('send-post').addEventListener('click', postContent);
-// logIn.addEventListener('click', userLogIn);
-// register.addEventListener('click', userRegister);
+document.getElementById('log-in').addEventListener('click', userLogIn);
+document.getElementById('register').addEventListener('click', userRegister);
