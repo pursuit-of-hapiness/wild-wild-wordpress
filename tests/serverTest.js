@@ -3,8 +3,10 @@ const server = require('../src/server.js');
 const test = require('tape');
 
 const testCookieRoute = require('./testRoutes/testCookieRoute');
+const testPurgeDatabase = require('./testRoutes/purgeDatabase');
 
 server.route(testCookieRoute);
+server.route(testPurgeDatabase);
 
 function getCookie(callback) {
   let cookie = '';
@@ -18,6 +20,18 @@ function getCookie(callback) {
     cookie = response.headers['set-cookie'][0].split(';')[0];
     server.stop();
     callback(cookie);
+  });
+}
+
+function purgeDatabase(callback) {
+  const purgeOptions = {
+    method: 'DELETE',
+    url: '/purge',
+  };
+
+  server.inject(purgeOptions, () => {
+    server.stop();
+    callback();
   });
 }
 
