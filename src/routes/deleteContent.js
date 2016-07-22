@@ -4,7 +4,7 @@ module.exports = {
   method: 'DELETE',
   path: '/content/{id}',
   handler: (request, reply) => {
-    if (!request.state.session) {
+    if (!request.state.session || (Date.now() - request.state.session.last) > 30 * 60 * 1000) {
       return reply('Please log in to execute request').code(401);
     }
     const id = request.params.id;
