@@ -8,12 +8,17 @@ const testPurgeDatabase = require('./testRoutes/purgeDatabase');
 server.route(testCookieRoute);
 server.route(testPurgeDatabase);
 
-function getCookie(callback) {
+function getCookie(sessionCreation, callback) {
   let cookie = '';
 
+  const payload = {
+    sessionStart: `${sessionCreation}`,
+  };
+
   const cookieOptions = {
-    method: 'GET',
+    method: 'POST',
     url: '/test',
+    payload,
   };
 
   server.inject(cookieOptions, (response) => {
@@ -87,7 +92,7 @@ test('Basic / route test', (t) => {
 });
 
 test('Handles content requests with session cookie', (t) => {
-  getCookie((cookie) => {
+  getCookie(Date.now(), (cookie) => {
     const payload = {
       userid: 1,
     };
@@ -103,6 +108,48 @@ test('Handles content requests with session cookie', (t) => {
       const respayload = response.payload;
       t.equal(response.statusCode, 200);
       t.ok(respayload.includes('<!DOCTYPE html>'));
+      server.stop(t.end);
+    });
+  });
+});
+
+test('Redirects to login if valid session cookie has expired', (t) => {
+  getCookie(Date.now() - (31 * 60 * 1000), (cookie) => {
+    const payload = {
+      userid: 1,
+    };
+    const options = {
+      method: 'GET',
+      url: '/content',
+      payload,
+      headers: {
+        Cookie: cookie,
+      },
+    };
+
+    server.inject(options, (response) => {
+      t.equal(response.statusCode, 401);
+      server.stop(t.end);
+    });
+  });
+});
+
+test('Returns bad request if session cookie is invalid', (t) => {
+  getCookie(Date.now(), (cookie) => {
+    const payload = {
+      userid: 1,
+    };
+    const options = {
+      method: 'GET',
+      url: '/content',
+      payload,
+      headers: {
+        Cookie: cookie.substring(0, 40),
+      },
+    };
+
+    server.inject(options, (response) => {
+      t.equal(response.statusCode, 400);
       server.stop(t.end);
     });
   });
@@ -124,7 +171,7 @@ test('Content request unsuccessful without session cookie', (t) => {
 });
 
 test('Update content requests successful with valid session cookie', (t) => {
-  getCookie((cookie) => {
+  getCookie(Date.now(), (cookie) => {
     const payload = {
       title: 'Post title',
       contentBody: 'This is a blog post',
@@ -163,7 +210,7 @@ test('Update content unsuccessful without valid session cookie', (t) => {
 });
 
 test('Posts content successful with valid session cookie', (t) => {
-  getCookie((cookie) => {
+  getCookie(Date.now(), (cookie) => {
     const payload = {
       title: 'Post title',
       contentBody: 'This is a blog post',
@@ -203,7 +250,7 @@ test('Post content unsuccessful without session cookie', (t) => {
 });
 
 test('Deletes succesfully with valid session cookie', (t) => {
-  getCookie((cookie) => {
+  getCookie(Date.now(), (cookie) => {
     const payload = {
       title: 'Post title',
       contentBody: 'This is a blog post',
