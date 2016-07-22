@@ -11,8 +11,7 @@ const routes = [
   'updateContent',
   'deleteContent',
   'registerUser',
-  'loginUser',
-  'login'];
+  'loginUser'];
 
 const routesArray = routes.map((el) => require(`./routes/${el}`));
 
