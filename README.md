@@ -1,6 +1,15 @@
 # wild-wild-wordpress
 Wordpress copy of somekind ++
 
+## What?
+
+To build a blog CMS Wordpress type site that uses:
+
+* Postgres
+* Hapi
+* Node
+* Handlebars
+
 ## To Run
 
 Clone this repo onto your local machine.
@@ -17,3 +26,4 @@ Once you have done this you can make a blog post usign the form and the 'post' b
 ## Stretch Goals
 
 * Deploy to Heroku
+* Make the site pretty using SASS
