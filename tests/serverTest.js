@@ -113,7 +113,7 @@ test('Handles content requests with session cookie', (t) => {
   });
 });
 
-test('Redirects to login if session cookie has expired', (t) => {
+test('Redirects to login if valid session cookie has expired', (t) => {
   getCookie(Date.now() - (31 * 60 * 1000), (cookie) => {
     const payload = {
       userid: 1,
@@ -134,7 +134,7 @@ test('Redirects to login if session cookie has expired', (t) => {
   });
 });
 
-test('Redirects to login if session cookie is invalid', (t) => {
+test('Returns bad request if session cookie is invalid', (t) => {
   getCookie(Date.now(), (cookie) => {
     const payload = {
       userid: 1,
@@ -144,12 +144,12 @@ test('Redirects to login if session cookie is invalid', (t) => {
       url: '/content',
       payload,
       headers: {
-        Cookie: cookie.substring(1),
+        Cookie: cookie.substring(0, 40),
       },
     };
 
     server.inject(options, (response) => {
-      t.equal(response.statusCode, 401);
+      t.equal(response.statusCode, 400);
       server.stop(t.end);
     });
   });
