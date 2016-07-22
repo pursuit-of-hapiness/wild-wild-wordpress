@@ -15,17 +15,17 @@ const userLogIn = () => {
   const userName = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   const loginQueryString = `username=${userName}&password=${password}`;
-  makeXhrRequest(loginQueryString, 'POST', '/user/login', 'application/x-www-form-urlencoded');
+  makeXhrRequest(loginQueryString, 'POST', '/user/login', 'application/x-www-form-urlencoded', () => {});
 }
 
 const userRegister = () => {
   const userName = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   const registerQueryString = `username=${userName}&password=${password}`;
-  makeXhrRequest(registerQueryString, 'POST', '/user/create', 'application/x-www-form-urlencoded');
+  makeXhrRequest(registerQueryString, 'POST', '/user/create', 'application/x-www-form-urlencoded', () => {});
 }
 
-window.addEventListener('load', getContent);
+// window.addEventListener('load', getContent);
 document.getElementById('log-in').addEventListener('click', userLogIn);
 document.getElementById('register').addEventListener('click', userRegister);
 // document.getElementById('send-post').addEventListener('click', postContent);
