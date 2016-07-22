@@ -1,0 +1,2 @@
+require('./helperTest');
+require('./serverTest');

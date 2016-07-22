@@ -1,6 +1,6 @@
 function makeXhrRequest(params, method, endpoint, contentType, cb) {
   const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = () => {
     if (xhr.readyState === 4 && xhr.status === 200) {
       cb(JSON.parse(xhr.responseText));
     } else if (xhr.readyState === 4 && xhr.status === 201) {
@@ -14,3 +14,5 @@ function makeXhrRequest(params, method, endpoint, contentType, cb) {
   xhr.setRequestHeader('Content-Type', contentType);
   xhr.send(params);
 }
+
+window.makeXhrRequest = makeXhrRequest;
