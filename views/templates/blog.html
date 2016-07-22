@@ -7,7 +7,8 @@
   <body>
     {{>header}}
     <div id="post-maker">
-      <textarea id="create-post" rows="8" cols="40"></textarea>
+      <textarea id="post-title" rows="2" cols="40"></textarea>
+      <textarea id="post-body" rows="8" cols="40"></textarea>
       <button type="button" id="send-post">send</button>
     </div>
     <div id="content-wrapper">
@@ -21,5 +22,7 @@
     </div>
       {{/each}}
       </div>
+    <script src="makeXhrRequest.js" charset="utf-8"></script>
+    <script src="index.js" charset="utf-8"></script>
   </body>
 </html>
