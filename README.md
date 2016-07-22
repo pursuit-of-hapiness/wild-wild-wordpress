@@ -16,4 +16,4 @@ Once you have done this you can make a blog post usign the form and the 'post' b
 
 ## Stretch Goals
 
-** Deploy to Heroku
+* Deploy to Heroku
