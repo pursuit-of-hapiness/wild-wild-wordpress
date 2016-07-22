@@ -22,7 +22,11 @@ const userRegister = () => {
   const userName = document.getElementById('username').value;
   const password = document.getElementById('password').value;
   const registerQueryString = `username=${userName}&password=${password}`;
-  makeXhrRequest(registerQueryString, 'POST', '/user/create', 'application/x-www-form-urlencoded', () => {});
+  makeXhrRequest(registerQueryString, 'POST', '/user/create', 'application/x-www-form-urlencoded', logResult);
+}
+
+const logResult = (result) => {
+  console.log(result);
 }
 
 // window.addEventListener('load', getContent);
