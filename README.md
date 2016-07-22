@@ -6,8 +6,8 @@ Wordpress copy of somekind ++
 Clone this repo onto your local machine.
 
 1. Run 'npm install' in your terminal
-2. Followed by 'export DATABASE_URL=postgres://qvggfurt:r3jWdQxJdDGRxpuPXrstJb2KlfQ9Gtdn@horton.elephantsql.com:5432/qvggfurt'
-3. Open a new tab in your terminal and run 'psql postgres://qvggfurt:r3jWdQxJdDGRxpuPXrstJb2KlfQ9Gtdn@horton.elephantsql.com:5432/qvggfurt'
+2. At this point you will need to gitter us to get the URL to export and run the database.
+3. This point will be explained to us via gitter after you message us for point 2.
 4. Back to your original tab now and run 'npm start'
 5. Go to your browser and use 'localhost:3000'
 
