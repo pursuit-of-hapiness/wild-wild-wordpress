@@ -11,7 +11,7 @@ module.exports = {
     const payload = Object.assign({}, request.payload);
     payload.postid = id;
     updateContent(payload, (err, result) => {
-      return reply(result).code(204);
+      return reply(result).code(200);
     });
   },
 };

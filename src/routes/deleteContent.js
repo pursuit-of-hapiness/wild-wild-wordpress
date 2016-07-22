@@ -14,7 +14,7 @@ module.exports = {
       if (err) {
         return reply().code(500);
       }
-      return reply().code(204);
+      return reply().code(200);
     });
   },
 };

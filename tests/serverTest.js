@@ -1,9 +1,26 @@
 
 const server = require('../src/server.js');
 const test = require('tape');
-const shot = require('shot');
 
-let cookie = ''
+const testCookieRoute = require('./testRoutes/testCookieRoute');
+
+server.route(testCookieRoute);
+
+function getCookie(callback) {
+  let cookie = '';
+
+  const cookieOptions = {
+    method: 'GET',
+    url: '/test',
+  };
+
+  server.inject(cookieOptions, (response) => {
+    cookie = response.headers['set-cookie'][0].split(';')[0];
+    server.stop();
+    callback(cookie);
+  });
+}
+
 test('Valid register URL handled correctly', (t) => {
   const payload = {
     username: 'testuser',
@@ -34,7 +51,7 @@ test('Valid user login URL handled correctly', (t) => {
   };
 
   server.inject(options, (response) => {
-    cookie = response.headers['set-cookie'][0].split(';')[0];
+    // cookie = response.headers['set-cookie'][0].split(';')[0];
     t.equal(response.statusCode, 202, 'returns correct status code');
     server.stop(t.end);
   });
@@ -56,23 +73,24 @@ test('Basic / route test', (t) => {
 });
 
 test('Handles content requests with session cookie', (t) => {
-  const payload = {
-    userid: 1,
-  };
-
-  const options = {
-    method: 'GET',
-    url: '/content',
-    payload,
-    headers: {
-      Cookie: cookie,
-    },
-  };
-  server.inject(options, (response) => {
-    const respayload = JSON.parse(response.payload);
-    t.equal(response.statusCode, 200);
-    t.ok(respayload.rows[0].id > 0);
-    server.stop(t.end);
+  getCookie((cookie) => {
+    const payload = {
+      userid: 1,
+    };
+    const options = {
+      method: 'GET',
+      url: '/content',
+      payload,
+      headers: {
+        Cookie: cookie,
+      },
+    };
+    server.inject(options, (response) => {
+      const respayload = JSON.parse(response.payload);
+      t.equal(response.statusCode, 200);
+      t.ok(respayload.rows[0].id > 0);
+      server.stop(t.end);
+    });
   });
 });
 
@@ -80,7 +98,6 @@ test('Content request unsuccessful without session cookie', (t) => {
   const payload = {
     userid: 1,
   };
-
   const options = {
     method: 'GET',
     url: '/content',
@@ -93,22 +110,24 @@ test('Content request unsuccessful without session cookie', (t) => {
 });
 
 test('Update content requests successful with valid session cookie', (t) => {
-  const payload = {
-    title: 'Post title',
-    contentBody: 'This is a blog post',
-  };
-  const options = {
-    method: 'PUT',
-    url: '/content/1',
-    payload,
-    headers: {
-      Cookie: cookie,
-    },
-  };
+  getCookie((cookie) => {
+    const payload = {
+      title: 'Post title',
+      contentBody: 'This is a blog post',
+    };
+    const options = {
+      method: 'PUT',
+      url: '/content/1',
+      payload,
+      headers: {
+        Cookie: cookie,
+      },
+    };
 
-  server.inject(options, (response) => {
-    t.equal(response.statusCode, 204);
-    server.stop(t.end);
+    server.inject(options, (response) => {
+      t.equal(response.statusCode, 200);
+      server.stop(t.end);
+    });
   });
 });
 
@@ -130,23 +149,25 @@ test('Update content unsuccessful without valid session cookie', (t) => {
 });
 
 test('Posts content successful with valid session cookie', (t) => {
-  const payload = {
-    title: 'Post title',
-    contentBody: 'This is a blog post',
-  };
-  const options = {
-    method: 'POST',
-    url: '/content',
-    payload,
-    headers: {
-      Cookie: cookie,
-    },
-  };
+  getCookie((cookie) => {
+    const payload = {
+      title: 'Post title',
+      contentBody: 'This is a blog post',
+    };
+    const options = {
+      method: 'POST',
+      url: '/content',
+      payload,
+      headers: {
+        Cookie: cookie,
+      },
+    };
 
-  server.inject(options, (response) => {
-    t.equal(response.statusCode, 201);
-    t.ok(response.payload.includes('content_body'));
-    server.stop(t.end);
+    server.inject(options, (response) => {
+      t.equal(response.statusCode, 201);
+      t.ok(response.payload.includes('content_body'));
+      server.stop(t.end);
+    });
   });
 });
 
@@ -167,23 +188,25 @@ test('Post content unsuccessful without session cookie', (t) => {
   });
 });
 
-test('Deletes succesfully', (t) => {
-  const payload = {
-    title: 'Post title',
-    contentBody: 'This is a blog post',
-  };
-  const options = {
-    method: 'DELETE',
-    url: '/content/{id}',
-    payload,
-    headers: {
-      Cookie: cookie,
-    },
-  };
+test('Deletes succesfully with valid session cookie', (t) => {
+  getCookie((cookie) => {
+    const payload = {
+      title: 'Post title',
+      contentBody: 'This is a blog post',
+    };
+    const options = {
+      method: 'DELETE',
+      url: '/content/{id}',
+      payload,
+      headers: {
+        Cookie: cookie,
+      },
+    };
 
-  server.inject(options, (response) => {
-    t.equal(response.statusCode, 204);
-    server.stop(t.end);
+    server.inject(options, (response) => {
+      t.equal(response.statusCode, 200);
+      server.stop(t.end);
+    });
   });
 });
 

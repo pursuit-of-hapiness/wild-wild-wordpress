@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const createUser = require('../helpers/createuser');
+const createSession = require('../auth/createSession');
 
 module.exports = {
   method: 'POST',
@@ -7,14 +8,16 @@ module.exports = {
   handler: (request, reply) => {
     const username = request.payload.username;
     bcrypt.hash(request.payload.password, 10, (err, hash) => {
-      const password = hash;
       const user = {
         username,
-        password,
+        password: hash,
       };
-      createUser(user, (createError, response) => {
-        const session = { user: response.rows[0].id };
-        session.last = Date.now();
+      createUser(user, (createUserError, response) => {
+        if (createUserError) {
+          return reply().code(500);
+        }
+        const userid = response.rows[0].id;
+        const session = createSession(userid);
         return reply().state('session', session).code(201);
       });
     });
